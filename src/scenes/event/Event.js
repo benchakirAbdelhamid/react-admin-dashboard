@@ -1,124 +1,248 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import { useState } from 'react';
+import React, { useState } from "react";
+import { Box } from "@mui/material";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
+const useStyles = makeStyles((theme) => ({
+  button: {
+    backgroundColor: "#7a0ec2cc",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#60079cc7",
+    },
   },
 }));
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 100,
+  p: 4,
+};
 
 const Event = () => {
-  // const state = useSelector((state) => state.topBar);
+  const classes = useStyles();
+  // modal
+  const [open, setOpen] = React.useState(false);
+  const [idUserDeleted, setIdUserDeleted] = React.useState(false);
+  const handleOpen = (id) => {
+    setOpen(true);
+    // console.log('==>',id)
+    setIdUserDeleted(id);
+  };
+  const handleClose = () => setOpen(false);
 
-  const [stateEvent , setstateEvent] = useState(
-    [
+  const [stateEvent, setstateEvent] = useState([
     {
-      id : '1',
-      eventName:'test eventName',
-      eventPrice:'test eventPrice',
-      description_event:'test description_event',
-      dateEvent:'test dateEvent',
-      locationEvent:'test locationEvent',
-      imageEvent:'test imageEvent',
-      statusEvent:'test statusEvent',
-      placesNumber:'test placesNumber',
-      typeEvenement:'test typeEvenement',
-      idOrganizer:'test idOrganizer',
+      id: "1",
+      eventName: "test eventName",
+      eventPrice: "test eventPrice",
+      description_event: "test description_event",
+      dateEvent: "test dateEvent",
+      locationEvent: "test locationEvent",
+      imageEvent: "test imageEvent",
+      statusEvent: "test statusEvent",
+      placesNumber: "test placesNumber",
+      typeEvenement: "test typeEvenement",
+      idOrganizer: "test idOrganizer",
     },
     {
-      id : '2',
-      eventName:'test eventName',
-      eventPrice:'test eventPrice',
-      description_event:'test description_event',
-      dateEvent:'test dateEvent',
-      locationEvent:'test locationEvent',
-      imageEvent:'test imageEvent',
-      statusEvent:'test statusEvent',
-      placesNumber:'test placesNumber',
-      typeEvenement:'test typeEvenement',
-      idOrganizer:'test idOrganizer',
-    }
-  ]
-  )
+      id: "2",
+      eventName: "test eventName",
+      eventPrice: "test eventPrice",
+      description_event: "test description_event",
+      dateEvent: "test dateEvent",
+      locationEvent: "test locationEvent",
+      imageEvent: "test imageEvent",
+      statusEvent: "test statusEvent",
+      placesNumber: "test placesNumber",
+      typeEvenement: "test typeEvenement",
+      idOrganizer: "test idOrganizer",
+    },
+  ]);
 
-
-   
-    return (
-      <Box m="20px">
-  <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>eventName</StyledTableCell>
-            <StyledTableCell align="right">eventPrice</StyledTableCell>
-            <StyledTableCell align="right">imageEvent</StyledTableCell>
-            <StyledTableCell align="right">locationEvent</StyledTableCell>
-            <StyledTableCell align="right">placesNumber</StyledTableCell>
-            <StyledTableCell align="right">statusEvent</StyledTableCell>
-            <StyledTableCell align="right">typeEvenement</StyledTableCell>
-            <StyledTableCell align="right">idOrganizer</StyledTableCell>
-            <StyledTableCell align="right">description_event</StyledTableCell>
-            <StyledTableCell align="right">Delete</StyledTableCell>
-            <StyledTableCell align="right">Update</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {stateEvent.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.eventName}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.eventPrice}</StyledTableCell>
-              <StyledTableCell align="right">{row.imageEvent}</StyledTableCell>
-              <StyledTableCell align="right">{row.locationEvent}</StyledTableCell>
-              <StyledTableCell align="right">{row.placesNumber}</StyledTableCell>
-              <StyledTableCell align="right">{row.statusEvent}</StyledTableCell>
-              <StyledTableCell align="right">{row.typeEvenement}</StyledTableCell>
-              <StyledTableCell align="right">{row.idOrganizer}</StyledTableCell>
-              <StyledTableCell align="right">{row.description_event}</StyledTableCell>
-              <StyledTableCell align="right">
-                  <Button variant="contained">Delete</Button>
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                  <Button variant="contained">Update</Button>
-                  </StyledTableCell>
-            </StyledTableRow>
-          ))} 
-        </TableBody>
-      </Table>
-    </TableContainer>
-      </Box>
-    
+  const handleInputChange = (e, id, field) => {
+    const updatedTableData = stateEvent.map((item) =>
+      item.id === id ? { ...item, [field]: e.target.value } : item
     );
-}
+    setstateEvent(updatedTableData);
+  };
+
+  const handleDeleteUser = () => {
+    // console.log('deleted')
+    console.log("===> deleted ===> ", idUserDeleted);
+    setOpen(false);
+  };
+
+  const handleNewDataUpdated = (id) => {
+    // console.log(id)
+    stateEvent.forEach((itemData) => {
+      if (itemData.id == id) {
+        console.log(itemData);
+      }
+    });
+  };
+
+  return (
+    <Box m="20px">
+      <div class="overflow-x-scroll">
+
+      <table id="customers">
+        <thead>
+          <tr>
+            <th>eventName</th>
+            <th>eventPrice</th>
+            <th>imageEvent</th>
+            <th>locationEvent</th>
+            <th>placesNumber</th>
+            <th>statusEvent</th>
+            <th>typeEvenement</th>
+            <th>idOrganizer</th>
+            <th>description_event</th>
+            <th>Delete</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stateEvent.map((item) => (
+            <tr key={item.id}>
+              <td component="th" scope="row">
+                <input
+                  type="text"
+                  value={item.eventName}
+                  onChange={(e) => handleInputChange(e, item.id, "eventName")}
+                />
+              </td>
+              <td component="th" scope="row">
+                <input
+                  type="text"
+                  value={item.eventPrice}
+                  onChange={(e) => handleInputChange(e, item.id, "eventPrice")}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.imageEvent}
+                  onChange={(e) => handleInputChange(e, item.id, "imageEvent")}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.locationEvent}
+                  onChange={(e) =>
+                    handleInputChange(e, item.id, "locationEvent")
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.placesNumber}
+                  onChange={(e) =>
+                    handleInputChange(e, item.id, "placesNumber")
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.statusEvent}
+                  onChange={(e) => handleInputChange(e, item.id, "statusEvent")}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.typeEvenement}
+                  onChange={(e) =>
+                    handleInputChange(e, item.id, "typeEvenement")
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.idOrganizer}
+                  onChange={(e) => handleInputChange(e, item.id, "idOrganizer")}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.description_event}
+                  onChange={(e) =>
+                    handleInputChange(e, item.id, "description_event")
+                  }
+                />
+              </td>
+
+              <td>
+                <Button
+                  className={classes.button}
+                  onClick={(e) => handleOpen(item.id)}
+                >
+                  Delete
+                </Button>
+              </td>
+              <td>
+                <Button
+                  className={classes.button}
+                  onClick={(e) => handleNewDataUpdated(item.id)}
+                >
+                  Update
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+
+      {/* modal */}
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+        >
+          <Fade in={open}>
+            <Box sx={style}>
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                Are you sure you want to delete this organizer !
+              </Typography>
+              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                <Button onClick={handleDeleteUser} className={classes.button}>
+                  Yes
+                </Button>
+                <Button onClick={handleClose} className={classes.button}>
+                  no
+                </Button>
+              </Typography>
+            </Box>
+          </Fade>
+        </Modal>
+      </div>
+      {/* modal */}
+    </Box>
+  );
+};
 
 export default Event;
-
-
-
-
